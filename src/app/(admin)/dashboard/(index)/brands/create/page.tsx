@@ -3,6 +3,6 @@ import FormBrand from '../_components/form-brand'
 
 export default function page() {
   return (
-    <FormBrand/>
+    <FormBrand type='ADD'/>
   )
 }

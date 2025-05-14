@@ -1,33 +1,49 @@
-"use client"
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ActionResult } from '@/types';
-import { AlertCircle, ChevronLeft } from 'lucide-react'
-import Link from 'next/link'
-import React from 'react'
-import { useFormState, useFormStatus } from 'react-dom';
-import { postBrand } from '../lib/actions';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ActionResult } from "@/types";
+import { AlertCircle, ChevronLeft } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { postBrand, updateBrand } from "../lib/actions";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Brand } from "@prisma/client";
 
 const initialState: ActionResult = {
-  error: "",}
+  error: "",
+};
+
+interface FormBrandProps {
+  type?: "ADD" | "EDIT";
+  data?: Brand | null;
+}
 
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" size="sm" disabled={pending}>
-     {pending ? "Loading..." : "Save Brand"}
+      {pending ? "Loading..." : "Save Brand"}
     </Button>
   );
 }
 
+export default function FormBrand({ data, type }: FormBrandProps) {
+  const updateWithId = (_: unknown, formData: FormData) =>
+    updateBrand(_, formData, data?.id ?? 0);
 
-export default function FormBrand() {
-
-  const [state, formAction] = useFormState(postBrand, initialState)
-
+  const [state, formAction] = useFormState(
+    type === "ADD" ? postBrand : updateWithId,
+    initialState
+  );
   return (
     <form action={formAction}>
       <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -77,7 +93,7 @@ export default function FormBrand() {
                         type="text"
                         className="w-full"
                         name="name"
-                      
+                        defaultValue={data?.name}
                       />
                     </div>
                     <div className="grid gap-3">
@@ -87,7 +103,6 @@ export default function FormBrand() {
                         type="file"
                         className="w-full"
                         name="image"
-                      
                       />
                     </div>
                     {/* <div className="grid gap-3">
@@ -354,5 +369,5 @@ export default function FormBrand() {
         </div>
       </div>
     </form>
-  )
+  );
 }

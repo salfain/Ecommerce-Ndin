@@ -10,7 +10,7 @@ export default async function EditPage({params}: Tedit) {
   if (!brand) {
     return redirect('/dashboard/brands')
   }
-  return <FormBrand type='EDIT' data={brand}/>
+  return <FormBrand type="EDIT" data={brand}/>
 }
 
 
