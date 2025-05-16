@@ -1,0 +1,56 @@
+import prisma from 'lib/prisma'
+import React from 'react'
+import { TColumn } from './columns';
+
+
+export async function getProducts() {
+  try {
+    const product = await prisma.product.findMany({
+        orderBy: {
+            name: 'asc'
+        },
+        select: {
+            id: true,
+            _count:{
+                select:{
+                    orders:true
+                }
+            },
+            name: true,
+            created_at: true,
+            price: true,
+            stock: true,
+            category: {
+                select: {
+                    name: true
+                }
+            },
+            brand:{
+                select:{
+                    name:true
+                }
+            },
+            images:true
+        }
+    })
+
+    const response_products: TColumn[] = product.map(product => {
+        return {
+            brand_name: product.brand.name,
+            category_name: product.category.name,
+            created_at: product.created_at,
+            image_url: product.images[0],
+            id: product.id,
+            name: product.name,
+            price: Number(product.price),
+            stock: product.stock,
+            total_sales: product._count.orders
+        }
+    })
+
+    return response_products
+  } catch (error) {
+    console.log(error)
+    return []
+  }
+}
