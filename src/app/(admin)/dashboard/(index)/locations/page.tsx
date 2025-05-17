@@ -15,10 +15,10 @@ import React from "react";
 import { columns } from "./colums";
 import Link from "next/link";
 
-import { getCategories } from "./lib/data";
+import { getLocations } from "./lib/data";
 
 export default async function DashboardPage() {
-  const data = await getCategories();
+  const data = await getLocations();
   return (
     <div className="space-y-4">
       <div className="text-right">

@@ -21,7 +21,7 @@ export async function postCategory(
   }
 
   try {
-    await prisma.location.create({
+    await prisma.category.create({
       data: {
         name: validate.data.name,
       },
@@ -30,7 +30,7 @@ export async function postCategory(
     console.log(error);
     return {error: 'failed to insert data'};
   }
-  return redirect("/dashboard/locations");
+  return redirect("/dashboard/categories");
 }
 
 

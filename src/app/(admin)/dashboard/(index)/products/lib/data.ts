@@ -1,6 +1,6 @@
 import prisma from 'lib/prisma'
 import React from 'react'
-import { TColumn } from './columns';
+import { TColumn } from '../columns';
 
 
 export async function getProducts() {
@@ -53,4 +53,19 @@ export async function getProducts() {
     console.log(error)
     return []
   }
+}
+
+
+export async function getProductById(id: number) {
+    try {
+        const product = await prisma.product.findFirst({
+            where: {
+                id: id
+            }
+        })
+        return product
+    } catch (error) {
+        console.log(error)
+        return null
+    }
 }

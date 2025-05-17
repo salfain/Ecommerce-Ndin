@@ -4,7 +4,7 @@ import { DataTable } from '@/components/ui/data-table'
 import { PlusCircle } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
-import { columns } from './lib/columns'
+import { columns } from './columns'
 import { getProducts } from './lib/data'
 
 export default async function ProductPage() {

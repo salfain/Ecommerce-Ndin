@@ -1,17 +1,52 @@
-"use client"
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { Textarea } from '@/components/ui/textarea'
-import { AlertCircle, ChevronLeft, PlusCircle, Upload } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import { useFormStatus } from 'react-dom'
-import UploadImages from './upload-images'
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
+import { AlertCircle, ChevronLeft, PlusCircle, Upload } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React, { ReactNode } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import UploadImages from "./upload-images";
+import { ActionResult } from "@/types";
+import { storeProduct, updateProduct } from "../lib/actions";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Product } from "@prisma/client";
+import { unknown } from "zod";
+
+interface FormProductProps {
+  children: ReactNode;
+  type: "ADD" | "EDIT";
+  data?: Product | null;
+}
+
+const initialFormState: ActionResult = {
+  error: "",
+};
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -22,9 +57,19 @@ function SubmitButton() {
   );
 }
 
-export default function FormProduct() {
+export default function FormProduct({
+  children,
+  type,
+  data,
+}: FormProductProps) {
+  const updateProductWithId = (_: unknown, formData: FormData) =>
+    updateProduct(_, formData, data?.id ?? 0);
+  const [state, formAction] = useFormState(
+    type === "ADD" ? storeProduct : updateProductWithId,
+    initialFormState
+  );
   return (
-  <form>
+    <form action={formAction}>
       <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
           <div className="flex items-center gap-4">
@@ -57,13 +102,13 @@ export default function FormProduct() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {/* {state.error !== "" && (
+                  {state.error !== "" && (
                     <Alert variant="destructive" className="mb-4">
                       <AlertCircle className="h-4 w-4" />
                       <AlertTitle>Error</AlertTitle>
                       <AlertDescription>{state.error}</AlertDescription>
                     </Alert>
-                  )} */}
+                  )}
                   <div className="grid gap-6">
                     <div className="grid gap-3">
                       <Label htmlFor="name">Name</Label>
@@ -72,226 +117,63 @@ export default function FormProduct() {
                         type="text"
                         className="w-full"
                         name="name"
-                        // defaultValue={data?.name}
+                        defaultValue={data?.name}
                       />
                     </div>
-                   
                     <div className="grid gap-3">
-                            <Label htmlFor="description">Description</Label>
-                            <Textarea
-                              id="description"
-                              defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies ultricies, nunc nisl ultricies nunc, nec ultricies nunc nisl nec nunc."
-                              className="min-h-32"
-                            />
-                          </div>
+                      <Label htmlFor="price">Price</Label>
+                      <Input
+                        id="price"
+                        type="number"
+                        className="w-full"
+                        name="price"
+                        defaultValue={typeof data?.price === "bigint" ? data.price.toString() : data?.price}
+                      />
+                    </div>
+                    <div className="grid gap-3">
+                      <Label htmlFor="description">Description</Label>
+                      <Textarea
+                        name="description"
+                        id="description"
+                        className="min-h-32"
+                        defaultValue={data?.description}
+                      />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
-              <Card x-chunk="dashboard-07-chunk-1">
-                      <CardHeader>
-                        <CardTitle>Stock</CardTitle>
-                        <CardDescription>
-                          Lipsum dolor sit amet, consectetur adipiscing elit
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <Table>
-                          <TableHeader>
-                            <TableRow>
-                              <TableHead className="w-[100px]">SKU</TableHead>
-                              <TableHead>Stock</TableHead>
-                              <TableHead>Price</TableHead>
-                              <TableHead className="w-[100px]">Size</TableHead>
-                            </TableRow>
-                          </TableHeader>
-                          <TableBody>
-                            <TableRow>
-                              <TableCell className="font-semibold">
-                                GGPC-001
-                              </TableCell>
-                              <TableCell>
-                                <Label htmlFor="stock-1" className="sr-only">
-                                  Stock
-                                </Label>
-                                <Input
-                                  id="stock-1"
-                                  type="number"
-                                  defaultValue="100"
-                                />
-                              </TableCell>
-                              <TableCell>
-                                <Label htmlFor="price-1" className="sr-only">
-                                  Price
-                                </Label>
-                                <Input
-                                  id="price-1"
-                                  type="number"
-                                  defaultValue="99.99"
-                                />
-                              </TableCell>
-                              <TableCell>
-                              
-                              </TableCell>
-                            </TableRow>
-                            <TableRow>
-                              <TableCell className="font-semibold">
-                                GGPC-002
-                              </TableCell>
-                              <TableCell>
-                                <Label htmlFor="stock-2" className="sr-only">
-                                  Stock
-                                </Label>
-                                <Input
-                                  id="stock-2"
-                                  type="number"
-                                  defaultValue="143"
-                                />
-                              </TableCell>
-                              <TableCell>
-                                <Label htmlFor="price-2" className="sr-only">
-                                  Price
-                                </Label>
-                                <Input
-                                  id="price-2"
-                                  type="number"
-                                  defaultValue="99.99"
-                                />
-                              </TableCell>
-                             
-                            </TableRow>
-                            <TableRow>
-                              <TableCell className="font-semibold">
-                                GGPC-003
-                              </TableCell>
-                              <TableCell>
-                                <Label htmlFor="stock-3" className="sr-only">
-                                  Stock
-                                </Label>
-                                <Input
-                                  id="stock-3"
-                                  type="number"
-                                  defaultValue="32"
-                                />
-                              </TableCell>
-                              <TableCell>
-                                <Label htmlFor="price-3" className="sr-only">
-                                  Stock
-                                </Label>
-                                <Input
-                                  id="price-3"
-                                  type="number"
-                                  defaultValue="99.99"
-                                />
-                              </TableCell>
-                              <TableCell>
-                            
-                              </TableCell>
-                            </TableRow>
-                          </TableBody>
-                        </Table>
-                      </CardContent>
-                      <CardFooter className="justify-center border-t p-4">
-                        <Button size="sm" variant="ghost" className="gap-1">
-                          <PlusCircle className="h-3.5 w-3.5" />
-                          Add Variant
-                        </Button>
-                      </CardFooter>
-                    </Card>
-            <Card x-chunk="dashboard-07-chunk-2">
-                      <CardHeader>
-                        <CardTitle>Product Category</CardTitle>
-                      </CardHeader> 
-              <CardContent>
-                        <div className="grid gap-6 sm:grid-cols-3">
-                          <div className="grid gap-3">
-                            <Label htmlFor="category">Category</Label>
-                            <Select name='category_id'>
-                              <SelectTrigger
-                                id="category"
-                                aria-label="Select category"
-                              >
-                                <SelectValue placeholder="Select category" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="clothing">Clothing</SelectItem>
-                                <SelectItem value="electronics">
-                                  Electronics
-                                </SelectItem>
-                                <SelectItem value="accessories">
-                                  Accessories
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="grid gap-3">
-                            <Label htmlFor="brand">
-                              Brand
-                            </Label>
-                            <Select name='brand_id'>
-                              <SelectTrigger
-                                id="brand"
-                                aria-label="Select brand"
-                              >
-                                <SelectValue placeholder="Select brand" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="t-shirts">T-Shirts</SelectItem>
-                                <SelectItem value="hoodies">Hoodies</SelectItem>
-                                <SelectItem value="sweatshirts">
-                                  Sweatshirts
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="grid gap-3">
-                            <Label htmlFor="location">
-                              Location
-                            </Label>
-                            <Select name='location_id'>
-                              <SelectTrigger
-                                id="location"
-                                aria-label="Select location"
-                              >
-                                <SelectValue placeholder="Select location" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="t-shirts">T-Shirts</SelectItem>
-                                <SelectItem value="hoodies">Hoodies</SelectItem>
-                                <SelectItem value="sweatshirts">
-                                  Sweatshirts
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+              <Card x-chunk="dashboard-07-chunk-2">
+                <CardHeader>
+                  <CardTitle>Product Category</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6 sm:grid-cols-3">{children}</div>
+                </CardContent>
+              </Card>
             </div>
             <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-               <Card x-chunk="dashboard-07-chunk-3" className='w=[600px]'>
-                      <CardHeader>
-                        <CardTitle>Product Status</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="grid gap-6">
-                          <div className="grid gap-3">
-                            <Label htmlFor="status">Status</Label>
-                            <Select>
-                              <SelectTrigger id="status" aria-label="Select status">
-                                <SelectValue placeholder="Select status" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="draft">Draft</SelectItem>
-                                <SelectItem value="published">Active</SelectItem>
-                                <SelectItem value="archived">Archived</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card> 
-               <UploadImages/>
-                    
+              <Card x-chunk="dashboard-07-chunk-3" className="w=[600px]">
+                <CardHeader>
+                  <CardTitle>Product Status</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6">
+                    <div className="grid gap-3">
+                      <Label htmlFor="status">Status</Label>
+                      <Select name="stock" defaultValue={data?.stock}>
+                        <SelectTrigger id="status" aria-label="Select status">
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="ready">Ready</SelectItem>
+                          <SelectItem value="preorder">Pre-Order</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <UploadImages />
             </div>
           </div>
           <div className="flex items-center justify-center gap-2 md:hidden">
@@ -303,5 +185,5 @@ export default function FormProduct() {
         </div>
       </div>
     </form>
-  )
+  );
 }

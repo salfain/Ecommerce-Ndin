@@ -8,7 +8,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Edit } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import FormDelete from "../../brands/_components/form-delete";
+import FormDelete from "../brands/_components/form-delete";
+import ProductPage from "./page";
 
 export type TColumn = {
   id: number;
@@ -31,7 +32,7 @@ export const columns: ColumnDef<TColumn>[] = [
       return (
         <div className="inline-flex items-center gap-5">
           <Image
-            src={getImageUrl(product.image_url)}
+            src={getImageUrl(product.image_url, 'products')}
             alt="Product"
             width={80}
             height={80}
@@ -60,7 +61,7 @@ export const columns: ColumnDef<TColumn>[] = [
   },
   {
     accessorKey: 'total_sales',
-    header: ''
+    header: 'Total Sales'
   },
   {
     accessorKey: 'crated_at',
@@ -74,11 +75,11 @@ export const columns: ColumnDef<TColumn>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const brand = row.original;
+      const Product = row.original;
       return (
         <div className="space-x-4 inline-flex">
           <Button size="sm" asChild>
-            <Link href={`/dashboard/products/edit/${brand.id}`}>
+            <Link href={`/dashboard/products/edit/${Product.id}`}>
               <Edit className="w-4 h-4 mr-2" /> Edit
             </Link>
           </Button>

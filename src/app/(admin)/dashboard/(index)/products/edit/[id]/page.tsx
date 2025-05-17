@@ -1,5 +1,4 @@
 import React from "react";
-import FormProduct from "../_components/form-product";
 
 import { Label } from "@/components/ui/label";
 import {
@@ -9,21 +8,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getBrands } from "../../brands/lib/data";
-import { getCategories } from "../../categories/lib/data";
-import { getLocations } from "../../locations/lib/data";
+import { getBrands } from "../../../brands/lib/data";
+import { getCategories } from "../../../categories/lib/data";
+import { getLocations } from "../../../locations/lib/data";
+import FormProduct from "../../_components/form-product";
+import { getProductById } from "../../lib/data";
+import { redirect } from "next/navigation";
 
-export default async function CreatePage() {
+interface EditPageProps {
+  params: { id: string };
+}
+
+export default async function EditPage({ params }: EditPageProps) {
+  const product = await getProductById(Number.parseInt(params.id));
   const brands = await getBrands();
   const categories = await getCategories();
   const locations = await getLocations();
 
+  if (!product) {
+    return redirect('/dashboard/product');
+  }
 
   return (
-    <FormProduct type="ADD">
+    <FormProduct type="EDIT" data={product}>
       <div className="grid gap-3">
         <Label htmlFor="category">Category</Label>
-        <Select name="category_id">
+        <Select name="category_id" defaultValue={product.category_id.toString()}>
           <SelectTrigger id="category" aria-label="Select category">
             <SelectValue placeholder="Select category" />
           </SelectTrigger>
@@ -38,14 +48,14 @@ export default async function CreatePage() {
       </div>
       <div className="grid gap-3">
         <Label htmlFor="brand">Brand</Label>
-        <Select name="brand_id">
+        <Select name="brand_id" defaultValue={product.brand_id.toString()}>
           <SelectTrigger id="brand" aria-label="Select brand">
             <SelectValue placeholder="Select brand" />
           </SelectTrigger>
           <SelectContent>
-            {brands?.map((cat) => (
-              <SelectItem key={cat.id} value={`${cat.id}`}>
-                {cat.name}
+            {brands?.map((brand) => (
+              <SelectItem key={brand.id} value={`${brand.id}`}>
+                {brand.name}
               </SelectItem>
             ))}
           </SelectContent>
@@ -53,14 +63,14 @@ export default async function CreatePage() {
       </div>
       <div className="grid gap-3">
         <Label htmlFor="location">Location</Label>
-        <Select name="location_id">
+        <Select name="location_id" defaultValue={product.location_id.toString()}>
           <SelectTrigger id="location" aria-label="Select location">
             <SelectValue placeholder="Select location" />
           </SelectTrigger>
           <SelectContent>
-            {locations?.map((cat) => (
-              <SelectItem key={cat.id} value={`${cat.id}`}>
-                {cat.name}
+            {locations?.map((loc) => (
+              <SelectItem key={loc.id} value={`${loc.id}`}>
+                {loc.name}
               </SelectItem>
             ))}
           </SelectContent>

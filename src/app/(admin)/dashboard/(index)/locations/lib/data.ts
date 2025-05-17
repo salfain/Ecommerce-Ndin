@@ -1,6 +1,6 @@
 import prisma from "lib/prisma"
 
-export async function getCategories() {
+export async function getLocations() {
     try {
         const categories = await prisma.location.findMany({})
         return categories
@@ -11,7 +11,7 @@ export async function getCategories() {
     }
 }
 
-export async function getCategoryById(id: string){
+export async function getLocationsById(id: string){
     try {
         const category = await prisma.location.findFirst({
             where: {
