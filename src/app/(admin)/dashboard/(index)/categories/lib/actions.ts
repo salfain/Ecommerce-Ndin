@@ -77,7 +77,7 @@ export async function updateCategory(
   ): Promise<ActionResult> {
 
     try {
-      await prisma.location.delete({
+      await prisma.category.delete({
         where: { id}})
     } catch (error) {
       console.log(error);
@@ -85,5 +85,5 @@ export async function updateCategory(
         error: "failed to delete data"
       }
     }
-    return redirect("/dashboard/locations");
+    return redirect("/dashboard/categories");
   }

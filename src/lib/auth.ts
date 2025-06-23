@@ -1,9 +1,10 @@
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import prisma from "../../lib/prisma";
+import { Lucia, Session } from "lucia";
 import { RoleUser } from "@prisma/client";
-import { Lucia, Session, User } from "lucia";
-import {cache} from "react";
+import { cache } from "react";
 import { cookies } from "next/headers";
+import { User } from "lucia";
 
 const adapter = new PrismaAdapter(prisma.session, prisma.user)
 
@@ -23,8 +24,6 @@ export const lucia = new Lucia(adapter, {
         }
     }
 })
-
-
 
 export const getUser = cache(
 	async (): Promise<{ user: User; session: Session } | { user: null; session: null }> => {
