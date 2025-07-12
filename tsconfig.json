@@ -24,14 +24,19 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
+        "./*"
       ]
     }
   },
   "include": [
-    "src/**/*",
-    ".next/types/**/*.ts"
-, "lib/auth.ts", "lib/schema.ts", "lib/supabase.ts", "lib/utils.ts", "lib/xendit.ts"  ],
+    "/**/*",
+    ".next/types/**/*.ts",
+    "lib/auth.ts",
+    "lib/schema.ts",
+    "lib/supabase.ts",
+    "lib/utils.ts",
+    "lib/xendit.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
