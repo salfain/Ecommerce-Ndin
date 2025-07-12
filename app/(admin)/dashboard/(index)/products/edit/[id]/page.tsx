@@ -8,11 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getBrands } from "../../../brands/lib/data";
-import { getCategories } from "../../../categories/lib/data";
-import { getLocations } from "../../../locations/lib/data";
-import FormProduct from "../../_components/form-product";
-import { getProductById } from "../../lib/data";
+import { getBrands } from "@/app/(admin)/dashboard/(index)/brands/lib/data";
+import { getCategories } from "@/app/(admin)/dashboard/(index)/categories/lib/data";
+import { getLocations } from "@/app/(admin)/dashboard/(index)/locations/lib/data";
+import FormProduct from "@/app/(admin)/dashboard/(index)/products/_components/form-product";
+import { getProductById } from "@/app/(admin)/dashboard/(index)/products/lib/data";
 import { redirect } from "next/navigation";
 
 interface EditPageProps {

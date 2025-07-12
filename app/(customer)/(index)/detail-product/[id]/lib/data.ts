@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import prisma from "../../../../../../../lib/prisma";
+import prisma from "@/@/../lib/prisma";
 import { getImageUrl } from "@/lib/supabase";
 
 export async function getProductById(id: number) {

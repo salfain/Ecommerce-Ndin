@@ -1,26 +1,26 @@
-import prisma from "lib/prisma";
-import React from "react";
+import prisma from '@/lib/prisma'
+import React from 'react'
 
-export async function getBrands() {
+export async function getBrands () {
   try {
-    const brands = await prisma.brand.findMany({});
-    return brands;
+    const brands = await prisma.brand.findMany({})
+    return brands
   } catch (error) {
-    console.log(error);
-    return [];
+    console.log(error)
+    return []
   }
 }
 
-export async function getBrandById(id: string) {
+export async function getBrandById (id: string) {
   try {
     const brand = await prisma.brand.findFirst({
       where: {
-        id: Number.parseInt(id),
-      },
-    });
-    return brand;
+        id: Number.parseInt(id)
+      }
+    })
+    return brand
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
 }

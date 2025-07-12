@@ -4,7 +4,7 @@ import { getUser } from '@/lib/auth'
 import { schemaShippingAddress } from '@/lib/schema'
 import { ActionResult, TCart } from '@/types'
 import { redirect } from 'next/navigation'
-import prisma from '../../../../../../lib/prisma'
+import prisma from '@/lib/prisma'
 import { generateRandomString } from '@/lib/utils'
 import {
   PaymentRequestParameters,

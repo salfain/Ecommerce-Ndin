@@ -1,51 +1,50 @@
-import prisma from 'lib/prisma'
+import prisma from '@/lib/prisma'
 import React from 'react'
-import { TColumn } from '../columns';
+import { TColumn } from '../columns'
 
-
-export async function getProducts() {
+export async function getProducts () {
   try {
     const product = await prisma.product.findMany({
-        orderBy: {
-            name: 'asc'
+      orderBy: {
+        name: 'asc'
+      },
+      select: {
+        id: true,
+        _count: {
+          select: {
+            orders: true
+          }
         },
-        select: {
-            id: true,
-            _count:{
-                select:{
-                    orders:true
-                }
-            },
-            name: true,
-            created_at: true,
-            price: true,
-            stock: true,
-            category: {
-                select: {
-                    name: true
-                }
-            },
-            brand:{
-                select:{
-                    name:true
-                }
-            },
-            images:true
-        }
+        name: true,
+        created_at: true,
+        price: true,
+        stock: true,
+        category: {
+          select: {
+            name: true
+          }
+        },
+        brand: {
+          select: {
+            name: true
+          }
+        },
+        images: true
+      }
     })
 
     const response_products: TColumn[] = product.map(product => {
-        return {
-            brand_name: product.brand.name,
-            category_name: product.category.name,
-            created_at: product.created_at,
-            image_url: product.images[0],
-            id: product.id,
-            name: product.name,
-            price: Number(product.price),
-            stock: product.stock,
-            total_sales: product._count.orders
-        }
+      return {
+        brand_name: product.brand.name,
+        category_name: product.category.name,
+        created_at: product.created_at,
+        image_url: product.images[0],
+        id: product.id,
+        name: product.name,
+        price: Number(product.price),
+        stock: product.stock,
+        total_sales: product._count.orders
+      }
     })
 
     return response_products
@@ -55,17 +54,16 @@ export async function getProducts() {
   }
 }
 
-
-export async function getProductById(id: number) {
-    try {
-        const product = await prisma.product.findFirst({
-            where: {
-                id: id
-            }
-        })
-        return product
-    } catch (error) {
-        console.log(error)
-        return null
-    }
+export async function getProductById (id: number) {
+  try {
+    const product = await prisma.product.findFirst({
+      where: {
+        id: id
+      }
+    })
+    return product
+  } catch (error) {
+    console.log(error)
+    return null
+  }
 }

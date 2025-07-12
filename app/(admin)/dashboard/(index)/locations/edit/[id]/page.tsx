@@ -1,5 +1,5 @@
 import React from "react";
-import { getCategoryById } from "../../lib/data";
+import { getCategoryById } from "../../../categories/lib/data";
 import { redirect } from "next/navigation";
 import FormCategory from "../../_components/form-category";
 import { Tedit } from "@/types";

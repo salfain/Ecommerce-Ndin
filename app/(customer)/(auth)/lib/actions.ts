@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 import { lucia } from "@/lib/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation"
-import prisma from "lib/prisma";
+import prisma from "@/lib/prisma";
 import { ActionResult } from "@/types";
 
 export async function signIn(

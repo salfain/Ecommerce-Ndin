@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { ActionResult } from "@/types";
 import { schemaCategory } from "@/lib/schema";
-import prisma from "lib/prisma";
+import prisma from "@/lib/prisma";
 import { log } from "console";
 
 export async function postCategory(
