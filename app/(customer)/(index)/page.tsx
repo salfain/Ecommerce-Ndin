@@ -1,171 +1,100 @@
-import React, { Suspense } from "react";
-import Navbar from "./_components/navbar";
-import ListCategory from "./_components/list-category";
-import ListProducts from "./_components/list-products";
-import ListBrands from "./_components/list-brands";
+import React, { Suspense } from "react"
+import Navbar from "./_components/navbar"
+import ListCategory from "./_components/list-category"
+import ListProducts from "./_components/list-products"
+import ListBrands from "./_components/list-brands"
+import Image from "next/image"
 
 export default function LandingPage() {
+
 	return (
-		<>
-			<header className="bg-[#EFF3FA] pt-[30px] pb-[50px]">
+		<React.Fragment>
+			{/* Header Section */}
+			<header className="bg-[#EFF3FA] pt-8 pb-12">
+				{/* Navbar */}
 				<Navbar />
-				<div className="container max-w-[1130px] mx-auto flex items-center justify-between gap-1 mt-[50px]">
-					<div className="flex flex-col gap-[30px]">
-						<div className="flex items-center gap-[10px] p-[8px_16px] rounded-full bg-white w-fit">
-							<div className="w-[22px] h-[22px] flex shrink-0">
-								<img src="assets/icons/crown.svg" alt="icon" />
-							</div>
-							<p className="font-semibold text-sm">
-								Produk Terlaris Di Toko Dumain 2
-							</p>
+
+				{/* Hero Section */}
+				<div className="container max-w-[1130px] mx-auto flex items-center justify-between gap-4 mt-12">
+					{/* Text Block */}
+					<div className="flex flex-col gap-6">
+						<div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white w-fit">
+							<Image
+								src="/assets/icons/crown.svg"
+								width={22}
+								height={22}
+								alt="Best Seller Icon"
+								className="object-contain"
+							/>
+							<p className="font-semibold text-sm">Produk Terlaris Di Toko Dumain 2</p>
 						</div>
-						<div className="flex flex-col gap-[14px]">
-							<h1 className="font-bold text-[55px] leading-[55px]">
-								Crunchy Hotzz
-							</h1>
-							<p className="text-lg leading-[34px] text-[#6A7789]">
+
+						<div className="flex flex-col gap-3">
+							<h1 className="font-bold text-5xl leading-tight">Crunchy Hotzz</h1>
+							<p className="text-lg text-[#6A7789]">
 								Naget Ayam Kombinasi Renyah yang enak di makan lezat dan bergizi tanpa formalin dan bahan pengawet
 							</p>
 						</div>
+
+						{/* Action Buttons */}
 						<div className="flex items-center gap-3">
-							<a
-								href=""
-								className="p-[18px_24px] rounded-full font-semibold bg-[#0D5CD7] text-white"
-							>
+							<a href="#" className="px-6 py-4 rounded-full bg-[#0D5CD7] text-white font-semibold">
 								Add to Cart
 							</a>
-							<a
-								href=""
-								className="p-[18px_24px] rounded-full font-semibold bg-white"
-							>
+							<a href="#" className="px-6 py-4 rounded-full bg-white font-semibold">
 								View Details
 							</a>
 						</div>
 					</div>
-					<div className="w-[400px] h-[360px] flex shrink-0 overflow-hidden relative">
-						<img
-							src="assets/banners/banner.jpg"
-							className="object-contain"
-							alt="icon"
+
+					{/* Banner Image */}
+					<div className="w-[400px] h-[360px] relative overflow-hidden">
+						<Image
+							src="/assets/banners/banner.jpg"
+							className="object-contain w-full h-full"
+							alt="Banner"
+							fill
 						/>
-					
-						<div className="absolute right-0 top-[30%] bg-white p-[14px_16px] rounded-3xl flex flex-col items-center gap-[10px]">
-							<div className="w-12 h-12 flex shrink-0 rounded-full items-center justify-center bg-[#FFC736] overflow-hidden">
-								<img
-									src="assets/icons/star-outline.svg"
+						{/* Guarantee Box */}
+						<div className="absolute top-[30%] right-0 bg-white p-4 rounded-3xl flex flex-col items-center gap-2">
+							<div className="w-12 h-12 bg-[#FFC736] rounded-full flex items-center justify-center overflow-hidden">
+								<Image
+									src="/assets/icons/star-outline.svg"
+									alt="Guarantee Icon"
 									className="w-6 h-6"
-									alt="icon"
+									width={22}
+									height={22}
 								/>
 							</div>
-							<p className="font-semibold text-sm text-center">
-								Garansi <br /> Pengiriman 
-							</p>
+							<p className="font-semibold text-sm text-center">Garansi <br /> Pengiriman</p>
 						</div>
 					</div>
 				</div>
-				{/* <div className="container max-w-[1130px] mx-auto flex items-center justify-center gap-10 mt-[50px]">
-					<div className="flex items-center gap-[10px]">
-						<div className="w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden">
-							<img
-								src="assets/photos/p1.png"
-								className="w-full h-full object-cover"
-								alt="photo"
-							/>
-						</div>
-						<div className="flex flex-col gap-[2px]">
-							<p className="font-semibold text-sm leading-[22px]">
-								Awesome product!
-							</p>
-							<p className="text-xs leading-[18px]">
-								Jemmie Pemilia
-							</p>
-						</div>
-					</div>
-					<div className="flex items-center gap-[10px]">
-						<div className="w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden">
-							<img
-								src="assets/photos/p2.png"
-								className="w-full h-full object-cover"
-								alt="photo"
-							/>
-						</div>
-						<div className="flex flex-col gap-[2px]">
-							<p className="font-semibold text-sm leading-[22px]">
-								Money saver 25%
-							</p>
-							<p className="text-xs leading-[18px]">
-								Angga Risky
-							</p>
-						</div>
-					</div>
-					<div className="flex items-center gap-[10px]">
-						<div className="w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden">
-							<img
-								src="assets/photos/p3.png"
-								className="w-full h-full object-cover"
-								alt="photo"
-							/>
-						</div>
-						<div className="flex flex-col gap-[2px]">
-							<p className="font-semibold text-sm leading-[22px]">
-								I love the warranty
-							</p>
-							<p className="text-xs leading-[18px]">
-								Petina Malaka
-							</p>
-						</div>
-					</div>
-					<div className="flex items-center gap-[10px]">
-						<div className="w-[50px] h-[50px] flex shrink-0 rounded-full border-[5px] border-white overflow-hidden">
-							<img
-								src="assets/photos/p4.png"
-								className="w-full h-full object-cover"
-								alt="photo"
-							/>
-						</div>
-						<div className="flex flex-col gap-[2px]">
-							<p className="font-semibold text-sm leading-[22px]">
-								Big deals ever!
-							</p>
-							<p className="text-xs leading-[18px]">
-								Udin Sarifun
-							</p>
-						</div>
-					</div>
-				</div> */}
 			</header>
-			<section
-				id="content"
-				className="container max-w-[1130px] mx-auto flex flex-col gap-[50px] pt-[50px] pb-[100px]"
-			>
-				<Suspense fallback={<span>Loading...</span>}>
+
+			{/* Content Section */}
+			<section className="container max-w-[1130px] mx-auto flex flex-col gap-12 pt-12 pb-24">
+				{/* Category List */}
+				<Suspense fallback={<div className="text-center">Loading Categories...</div>}>
 					<ListCategory />
 				</Suspense>
-				<Suspense fallback={<span>Loading...</span>}>
 
-                <ListProducts
-					title={
-						<>
-							Paling Banyak Dipilih <br /> Produk Berkualitas
-						</>
-					}
-				/>
-                </Suspense>
-				
-                    <Suspense fallback={<span>Loading...</span>}>
-                    <ListBrands />
-                    </Suspense>
+				{/* Product List */}
+				<Suspense fallback={<div className="text-center">Loading Products...</div>}>
+					<ListProducts
+						title={
+							<>
+								Paling Banyak Dipilih <br /> Produk Berkualitas
+							</>
+						}
+					/>
+				</Suspense>
 
-				<Suspense fallback={<span>Loading...</span>}>
-                {/* <ListProducts
-					title={
-						<>
-							New Releases <br /> From Official Stores
-						</>
-					}
-				/> */}
-                </Suspense>
+				{/* Brand List */}
+				<Suspense fallback={<div className="text-center">Loading Brands...</div>}>
+					<ListBrands />
+				</Suspense>
 			</section>
-		</>
-	);
+		</React.Fragment>
+	)
 }

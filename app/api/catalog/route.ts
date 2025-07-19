@@ -96,6 +96,7 @@ export async function POST (request: Request) {
         id: product.id,
         category_name: product.category.name,
         image_url: getImageUrl(product.images[0], 'products'),
+        // image_url: product.images[0],
         name: product.name,
         price: Number(product.price)
       }

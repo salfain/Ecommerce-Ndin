@@ -1,5 +1,4 @@
 import prisma from '@/lib/prisma'
-import React from 'react'
 import { TColumn } from '../columns'
 import { getImageUrl } from '@/lib/supabase'
 
@@ -26,7 +25,8 @@ export async function getOrders () {
             image: getImageUrl(item.product.images[0])
           }
         }),
-        status: ord.status
+        status: ord.status,
+        StatusDelivery: ord.statusDelivery
       }
     })
     return response

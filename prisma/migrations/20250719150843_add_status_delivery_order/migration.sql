@@ -7,6 +7,9 @@ CREATE TYPE "ProductStock" AS ENUM ('ready', 'preorder');
 -- CreateEnum
 CREATE TYPE "StatusOrder" AS ENUM ('pending', 'success', 'failed');
 
+-- CreateEnum
+CREATE TYPE "StatusDelivery" AS ENUM ('processing', 'shipped', 'delivered');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
@@ -84,6 +87,7 @@ CREATE TABLE "Order" (
     "user_id" INTEGER NOT NULL,
     "total" BIGINT NOT NULL,
     "status" "StatusOrder" NOT NULL,
+    "statusDelivery" "StatusDelivery" NOT NULL DEFAULT 'processing',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 

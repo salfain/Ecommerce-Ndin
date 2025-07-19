@@ -1,5 +1,6 @@
 import { rupiahFormat } from '@/lib/utils'
 import { TProduct } from '@/types'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -10,6 +11,9 @@ interface CardProductProps {
 }
 
 export default function CardProduct({ item }: CardProductProps) {
+	const imageSrc = item.image_url.startsWith('https')
+		? item.image_url
+		: `/${item.image_url}`
 	return (
 		<Link
 			href={`/detail-product/${item.id}`}
@@ -17,7 +21,7 @@ export default function CardProduct({ item }: CardProductProps) {
 		>
 			<div className="bg-white flex flex-col gap-[24px] p-5 rounded-[20px] ring-1 ring-[#E5E5E5] hover:ring-2 hover:ring-[#FFC736] transition-all duration-300 w-full">
 				<div className="w-full h-[90px] flex shrink-0 items-center justify-center overflow-hidden">
-					<img className='h-full object-contain' src={item.image_url} alt="thumbnail" />
+					<Image className='h-full object-contain' src={imageSrc} alt="thumbnail" height={150} width={150} />
 				</div>
 				<div className="flex flex-col gap-[10px]">
 					<div className="flex flex-col gap-1">
