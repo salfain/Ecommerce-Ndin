@@ -11,9 +11,11 @@ export async function getOrders () {
           include: {
             product: true
           }
-        }
+        },
+        detail: true
       }
     })
+
     const response: TColumn[] = orders.map(ord => {
       return {
         id: ord.id,
@@ -25,6 +27,14 @@ export async function getOrders () {
             image: getImageUrl(item.product.images[0])
           }
         }),
+        orderDetail: {
+          name: ord.detail?.name || '',
+          phone: ord.detail?.phone || '',
+          address: ord.detail?.address || '',
+          city: ord.detail?.city || '',
+          postal_code: ord.detail?.postal_code || '',
+          note: ord.detail?.notes || ''
+        },
         status: ord.status,
         StatusDelivery: ord.statusDelivery
       }

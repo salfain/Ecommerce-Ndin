@@ -84,7 +84,7 @@ export function OrderHistory({ userId }: OrderHistoryProps) {
 
                             {order.products.map((op: any) => (
                                 <div key={op.id} className="flex gap-4">
-                                    <Image
+                                    {/* <Image
                                         src={
                                             op.product.images[0].startsWith('https')
                                                 ? op.product.images[0]
@@ -94,7 +94,7 @@ export function OrderHistory({ userId }: OrderHistoryProps) {
                                         height={80}
                                         alt={op.product.name}
                                         className="rounded-md"
-                                    />
+                                    /> */}
                                     <div className="flex-1">
                                         <p className="font-semibold">{op.product.name}</p>
                                         <p className="text-sm text-gray-500">{op.product.brand.name}</p>
